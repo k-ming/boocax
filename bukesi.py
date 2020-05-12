@@ -99,6 +99,10 @@ class RecvTread(Thread):
                 print getDate(), '硬件错误:{}'.format(msg)
             elif msg['message_type'] == 'real_path':
                 print getDate(), '全局规划路径:{}'.format(msg)
+            elif msg['message_type'] == 'report_poi_status':
+                print getDate(), 'POI状态反馈:{}'.format(msg)
+            elif msg['message_type'] == 'report_loc_status':
+                print getDate(), '机器人定位状态更新:{}'.format(msg)
             else:
                 print getDate(), msg
 
@@ -114,8 +118,8 @@ def subscribe():
     s.send(json_packed)
     # json_packed = pack2bytes(R.getInfo('status', 'get_all_robot_info_message'))  # 获取全部机器人信息
     # s.send(json_packed)
-    # json_packed = pack2bytes(R.getInfo('status', 'report_loc_status'))  # 定位状态
-    # s.send(json_packed)
+    json_packed = pack2bytes(R.getInfo('status', 'report_loc_status'))  # 定位状态
+    s.send(json_packed)
     json_packed = pack2bytes(R.getInfo('status', 'move_status'))  # 移动状态
     s.send(json_packed)
     json_packed = pack2bytes(R.getInfo('status', 'charge_status'))  # 充电状态
@@ -123,97 +127,91 @@ def subscribe():
     json_packed = pack2bytes(R.getInfo('status', 'move_status1'))
     s.send(json_packed)
 
-    # 启动接收线程
-    RecvTread(s).start()
-    return s
-
-def statTest():
-    pass
     # control
     # json_packed = pack2bytes(R.getInfo('status', 'move_message'))  # 移动控制一段距离
     # s.send(json_packed)
-    # print R.getInfo('control', 'poi_action')
-    # json_packed = pack2bytes(R.getInfo('control', 'poi_action'))  # 导航点指定点
+    # json_packed = pack2bytes(R.getInfo('control', 'poi_action1'))  # 导航点指定点
     # s.send(json_packed)
     # json_packed = pack2bytes(R.getInfo('control', 'goCharge'))  # 导航到对桩点并充电
     # s.send(json_packed)
     # json_packed = pack2bytes(R.getInfo('control', 'cancel_charge')) # 取消充电
     # s.send(json_packed)
 
+    # 启动接收线程
+    RecvTread(s).start()
+    return s
 
+def statTest():
+    s = subscribe()
+    i = 1
+    fail = 0
+    while i <= 10:
+        print '*****************开始第%d轮导航****************************'%i
+        writeLog('*****************开始第%d轮导航****************************'%i)
+        print '>>>导航到p17...'
+        writeLog('>>>导航到p17...')
+        json_packed = pack2bytes(R.getInfo('control', 'poi_action17'))  # 导航点指定点
+        s.send(json_packed)
+        while True:
+            msg = receive2dic(s)
+            writeLog(msg)
+            if msg['message_type'] == 'report_move_status_v2':
+                if msg['move_status'] == 300:
+                    print '到达目的地,状态:{}'.format(msg['move_status'])
+                    writeLog('到达目的地p17')
+                    break
+            else:
+                print '导航中...'
+                writeLog('导航中...')
+                continue
+        time.sleep(6)
 
-    # i = 1
-    # fail = 0
-    # while i <= 10:
-    #     print '*****************开始第%d轮导航****************************'%i
-    #     writeLog('*****************开始第%d轮导航****************************'%i)
-    #     # 导航到p1
-    #     print '导航到p22...'
-    #     writeLog('导航到p22...')
-    #     json_packed = pack2bytes(R.getInfo('control', 'poi_action1'))  # 导航点指定点
-    #     s.send(json_packed)
-    #     while True:
-    #         # logcat(s)
-    #         msg = receive2dic(s)
-    #         writeLog(msg)
-    #         print msg.get('move_status')
-    #         if msg.get('move_status') == 300 or msg.get('move_status') == 2:
-    #             print '到达目的地'
-    #             writeLog('到达目的地')
-    #             break
-    #         else:
-    #             print '导航中...'
-    #             continue
-
-        # 导航到p5
-        # print '导航到p2...'
-        # writeLog('导航到p2...')
-        # json_packed = pack2bytes(R.getInfo('control', 'poi_action1'))  # 导航点指定点
+        print '>>>导航到充电点并充电...'
+        writeLog('>>>导航到充电点并充电(charge)...')
+        json_packed = pack2bytes(R.getInfo('control', 'goCharge'))  # 导航到对桩点并充电
+        s.send(json_packed)
+        while True:
+            msg = receive2dic(s)
+            writeLog(msg)
+            if msg['message_type'] == 'report_charge_status':
+                if msg['charge_status'] == 1:
+                    print '正在使用充电桩充电(自动对接),充电状态:{}'.format(msg['charge_status'])
+                    writeLog('正在使用充电桩充电(自动对接)')
+                    break
+                elif msg['charge_status'] == 3:
+                    print '对接过程中：正在和充电座对接,充电状态:{}'.format(msg['charge_status'])
+                    writeLog('对接过程中：正在和充电座对接,充电状态:{}'.format(msg['charge_status']))
+                    continue
+                elif msg['charge_status'] == 8:
+                    print '自动充电测试红外信号状态:{}'.format(msg['charge_status'])
+                    writeLog('自动充电测试红外信号状态:{}'.format(msg['charge_status']))
+                    continue
+                elif msg['charge_status'] == 0:
+                    print '充电失败，未充电状态:{}'.format(msg['charge_status'])
+                    writeLog('充电失败，未充电状态:{}'.format(msg['charge_status']))
+                    fail += 1
+                    break
+            elif msg['message_type'] == 'report_move_status_v2':
+                if msg['move_status'] == 300:
+                    print '到达对位点'
+                    writeLog('到达对位点')
+            else:
+                print '导航到充电桩...'
+                writeLog('导航到充电桩...')
+                continue
+        time.sleep(10)
+        print '取消充电...'
+        json_packed = pack2bytes(R.getInfo('control', 'cancel_charge'))  # 取消充电
+        s.send(json_packed)
+        time.sleep(10)
+        # json_packed = pack2bytes(R.getInfo('control', 'poi_action1'))  # 导航到点
         # s.send(json_packed)
-        # while True:
-        #     msg = receive2dic(s)
-        #     writeLog(msg)
-        #     if msg.get('move_status') == 300:
-        #         print '到达目的地'
-        #         writeLog('到达目的地')
-        #         break
-        #     else:
-        #         print '导航中...'
-        #         continue
-
-        # 充电
-    #     print '导航到充电点并充电'
-    #     writeLog('导航到充电点并充电')
-    #     json_packed = pack2bytes(R.getInfo('control', 'goCharge'))  # 导航到对桩点并充电
-    #     s.send(json_packed)
-    #     while True:
-    #         msg = receive2dic(s)
-    #         # logcat(s)
-    #         if msg.get('charge_status') == 1:
-    #             print '正在使用充电桩充电(自动对接)'
-    #             writeLog('正在使用充电桩充电(自动对接)')
-    #             break
-    #         elif msg.get('charge_status') == 0:
-    #             print '充电失败'
-    #             writeLog('充电失败')
-    #             fail += 1
-    #             break
-    #         else:
-    #             print '导航到充电桩...'
-    #             continue
-    #     time.sleep(3)
-    #     json_packed = pack2bytes(R.getInfo('control', 'cancel_charge'))  # 取消充电
-    #     s.send(json_packed)
-    #     json_packed = pack2bytes(R.getInfo('control', 'poi_action1'))  # 导航到点
-    #     s.send(json_packed)
-    #     i += 1
-    # print '*********************已完成{}轮导航,充电失败{}次*****************************'.format(i, fail)
-    # writeLog('*********************已完成{}轮导航,充电失败{}次*****************************'.format(i, fail))
-    # # Close
-    # s.close()
+        i += 1
+    print '*********************已完成{}轮导航,充电失败{}次*****************************'.format(i, fail)
+    writeLog('*********************已完成{}轮导航,充电失败{}次*****************************'.format(i, fail))
+    # Close
+    s.close()
 
 if __name__ == '__main__':
-    subscribe()
     # statTest()
-    # reg_client_message = {"message_type": "register_client", "client_type": 3, "mac_address": "DE:F2:A5:62:54:A1"}
-    # print pack2bytes(reg_client_message)
+    subscribe()
