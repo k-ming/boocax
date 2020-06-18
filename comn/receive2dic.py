@@ -79,5 +79,11 @@ class RecvTread(Thread):
                 print getDate(), '机器人定位状态更新:{}'.format(msg)
             elif msg['message_type'] == 'device_task_request':
                 print getDate(), '当前任务类型:{}'.format(msg)
+            elif msg['message_type'] == 'sensor_power_status':
+                print getDate(), '传感器上电状态:{}'.format(msg)
+            elif msg['message_type'] == 'report_obd_status':
+                print getDate(), 'obd信息:{}'.format(msg)
+            elif msg['message_type'] == 'local_path':
+                print getDate(), '（导航中）局部路径:{}'.format(msg)
             else:
                 print getDate(), msg
