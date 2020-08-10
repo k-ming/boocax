@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-#
 import json
 import struct
+import time
 from threading import Thread
 from comn.getDate import getDate
 
@@ -30,7 +31,6 @@ def receive2dic(tcp_sock):
         # 拼接字符串与编码转换
     str_json = (b''.join(buffer)).decode()
     return json.loads(str_json)
-
 
 class RecvTread(Thread):
     def __init__(self, tcp_socket):

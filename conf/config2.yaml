@@ -1,0 +1,87 @@
+apply_map:
+  map_name: HongQiao
+  message_type: apply_map
+cancel_charge:
+  message_type: cancel_charge
+  robot_mac_address: 3A:DC:F2:C5:74:64
+cancel_goal:
+  message_type: cancel_goal
+  robot_mac_address: 3A:DC:F2:C5:74:64
+charge:
+  message_type: charge
+  robot_mac_address: 3A:DC:F2:C5:74:64
+get_all_robot_info_message:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: get_all_robot_info
+get_file:
+  file_name: poi.json
+  message_type: get_file
+goCharge:
+  charge_point_name: charge
+  message_type: charge
+  robot_mac_address: 3A:DC:F2:C5:74:64
+host_mac: A0:A4:C5:2E:EF:37
+move:
+  message_type: move
+  robot_mac_address: 3A:DC:F2:C5:74:64
+  vtheta: 0
+  vx: 0.5
+  vy: 0
+move_status:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: report_move_status_v2
+move_status1:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: report_move_status
+poi_action1:
+  message_type: poi_action
+  mode: goto
+  params:
+    name: p1
+  robot_mac_address: 3A:DC:F2:C5:74:64
+power_off:
+  auto_poweron_delay: 60
+  auto_poweron_time: 34200
+  message_type: shutdown
+  poweroff_delay: 30
+  robot_mac_address: 3A:DC:F2:C5:74:64
+reg_client_message:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: register_client
+report_button_status:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: report_button_status
+report_charge_status:
+  charge_status: 0
+  id: 1
+  ip_address: 192.168.10.3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: report_charge_status
+  name: robot1
+report_loc_status:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: report_loc_status
+report_poi_status:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: report_poi_status
+robot_mac: 3A:DC:F2:C5:74:64
+server_ip: 192.168.10.2
+set_sensor_data_info:
+  client_type: 3
+  mac_address: A0:A4:C5:2E:EF:37
+  message_type: set_sensor_data_info
+update_file:
+  content: eyJ2ZXJzaW9uIjogIjEuMC4wIiwgImVuY29kaW5nIjogInV0Zi04IiwgInBvaV9pbmZvIjogW3sibmFtZSI6ICJwMSIsICJwb3NpdGlvbiI6IHsieCI6IC0yMS41NCwgInkiOiA5LjQ3LCAieWF3IjogMC4wMn19LCB7Im5hbWUiOiAicDIiLCAicG9zaXRpb24iOiB7IngiOiAtMjEuMzMsICJ5IjogNy43MywgInlhdyI6IDUuOTN9fSwgeyJuYW1lIjogInAzIiwgInBvc2l0aW9uIjogeyJ4IjogLTIxLjM4LCAieSI6IDYuNDgsICJ5YXciOiA2LjE2fX0sIHsibmFtZSI6ICJwNCIsICJwb3NpdGlvbiI6IHsieCI6IC0xNi4yMiwgInkiOiA1LjIsICJ5YXciOiAwLjA2fX0sIHsibmFtZSI6ICJwNSIsICJwb3NpdGlvbiI6IHsieCI6IC0xMi42MywgInkiOiA1LjE1LCAieWF3IjogNi4yN319LCB7Im5hbWUiOiAicDYiLCAicG9zaXRpb24iOiB7IngiOiAtOS4zMywgInkiOiA1LjIsICJ5YXciOiAwLjA1fX0sIHsibmFtZSI6ICJ3b3JrIiwgInBvc2l0aW9uIjogeyJ4IjogLTAuNTgsICJ5IjogNS4xNywgInlhdyI6IDAuMDl9fSwgeyJuYW1lIjogInA3IiwgInBvc2l0aW9uIjogeyJ4IjogLTYuMjksICJ5IjogNS4wNywgInlhdyI6IDYuMjd9fSwgeyJuYW1lIjogInA4IiwgInBvc2l0aW9uIjogeyJ4IjogLTMuMTgsICJ5IjogNS4wLCAieWF3IjogMC4yMn19LCB7Im5hbWUiOiAiY2FyNiIsICJwb3NpdGlvbiI6IHsieCI6IC0yMS4zMiwgInkiOiA4Ljg1LCAieWF3IjogNi4yMX19LCB7Im5hbWUiOiAiY2FyNCIsICJwb3NpdGlvbiI6IHsieCI6IC0xOC4yMywgInkiOiA1LjIzLCAieWF3IjogMy4xMX19LCB7Im5hbWUiOiAiaG9tZSIsICJwb3NpdGlvbiI6IHsieCI6IC05LjYxLCAieSI6IDEwLjQ2LCAieWF3IjogMC4wNX19LCB7Im5hbWUiOiAiY2FyNSIsICJwb3NpdGlvbiI6IHsieCI6IC0yMS4zOSwgInkiOiA3LjAyLCAieWF3IjogNi4xOX19LCB7Im5hbWUiOiAiY2FyMiIsICJwb3NpdGlvbiI6IHsieCI6IC0xMS40LCAieSI6IDUuMjksICJ5YXciOiAzLjI0fX0sIHsibmFtZSI6ICJjYXIzIiwgInBvc2l0aW9uIjogeyJ4IjogLTE0LjQ1LCAieSI6IDUuMTUsICJ5YXciOiAzLjAzfX0sIHsibmFtZSI6ICJjYXIxIiwgInBvc2l0aW9uIjogeyJ4IjogLTguMDYsICJ5IjogNS4yNSwgInlhdyI6IDMuMn19XSwgImNoYXJnZV9wb2ludHNfaW5mbyI6IFt7Im5hbWUiOiAiY2hhcmdlIiwgInBvc2l0aW9uIjogeyJ4IjogLTEyLjcyNTcsICJ5IjogOS4xMDYzLCAieWF3IjogMC4wMzc1NDUxfX1dLCAiZ3JvdXBzIjogeyIjdGVzdGluZyMiOiBbInAxIiwgInAyIiwgInAzIiwgInA0IiwgInA1IiwgInA2IiwgInA3IiwgInA4IiwgIndvcmsiLCAiaG9tZSIsICJjYXIxIiwgImNhcjIiLCAiY2FyMyIsICJjYXI0IiwgImNhcjUiLCAiY2FyNiJdfX0=
+  destination: both
+  file_name: poi.json
+  file_size: 1376
+  md5: 70b428bb6ac7af8ce7f88fe139bccd44
+  message_type: update_file
+  version: 0
