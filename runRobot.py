@@ -24,7 +24,7 @@ with open('conf/config.yaml') as yfile:
     except yaml.YAMLError as error:
         print error
 # 过滤消息
-set_filter = {"message_type": "set_filter","filter": ["laser", "report_sensor_data_info", "all_file_info",  "set_sensor_data_info", "report_basic_status", 'sensor_power_status', 'report_stat',   'report_pos_vel_status', 'auto_guided_task_status', 'device_status', 'local_path', 'register_status', 'all_robot_info',   'sonar', 'config_signature', 'report_obd_status']}
+set_filter = {"message_type": "set_filter", "filter":["sensor_data", "laser", "report_sensor_data_info", "all_file_info", "report_obd_status", "set_sensor_data_info", "report_basic_status", 'sensor_power_status', 'report_stat', 'report_pos_vel_status', 'auto_guided_task_status', 'device_status', 'local_path', 'register_status', 'all_robot_info', 'sonar', 'config_signature']}
 
 def subscribe():
     # Socket TCP
@@ -41,6 +41,10 @@ def subscribe():
 
 if __name__ == '__main__':
     s = subscribe()
+    json_packed = pack2bytes(yobj.get('get_file')) # 获取点位信息
+    s.send(json_packed)
+    json_packed = pack2bytes(yobj.get('get_all_robot_info_message'))
+    s.send(json_packed)
     # testCharge(s)
     # lowPower(s)
     # testMd5()

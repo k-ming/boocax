@@ -2,7 +2,7 @@
 import time, yaml
 from comn.writeLog import writeLog
 from comn.pack2bytes import pack2bytes
-from comn.receive2dic import receive2dic
+from comn.receive2dic import receive2dic, udecode
 from comn.getDate import getDate
 from comn.configRead import Read
 
@@ -34,7 +34,7 @@ def testCharge(s):
         s.send(json_packed)
         while True:
             msg = receive2dic(s)
-            writeLog(msg)
+            writeLog(udecode(msg))
             if msg['message_type'] == 'report_move_status_v2':
                 if msg['move_status'] == 300:
                     print getDate(), '到达目的地,状态:{}'.format(msg['move_status'])
@@ -59,7 +59,7 @@ def testCharge(s):
         s.send(json_packed)
         while True:
             msg = receive2dic(s)
-            writeLog(msg)
+            writeLog(udecode(msg))
             if msg['message_type'] == 'report_charge_status':
                 if msg['charge_status'] == 1:
                     print getDate(),'正在使用充电桩充电(自动对接),充电状态:{}'.format(msg['charge_status'])
