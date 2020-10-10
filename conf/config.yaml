@@ -1,15 +1,17 @@
 ---
 # 连接初始化信息
 robot_mac:
-  &robot_mac 52:BE:88:D0:96:B0
+  &robot_mac AE:F0:52:DF:EC:1B
 host_mac:
   &host_mac A0:A4:C5:2E:EF:37
 server_ip:
-  &server_ip 192.168.3.19
+  &server_ip 192.168.3.23
 reg_client_message:
   {"message_type": "register_client","client_type": 3,"mac_address": *host_mac }
 
 # 订阅状态信息
+get_all_robot_info: # 获取所有机器人信息
+  {"message_type": "get_all_robot_info"}
 set_sensor_data_info: # 设置传感器实时参数
   {"message_type": "set_sensor_data_info","client_type": 3,"mac_address": *host_mac}
 get_all_robot_info_message: # 获取服务器上所有机器人信息
@@ -28,8 +30,14 @@ report_poi_status: # 上报位置信息
   {"message_type": 'report_poi_status',"client_type": 3,"mac_address": *host_mac}
 get_file: # 获取点位信息
   {"message_type": "get_file","file_name": "poi.json"}
+get_all_map_info: # 获取地图信息
+  {"message_type": "get_all_map_info"}
 update_file: # 更新点位信息
-  {"message_type": "update_file", "file_name": "poi.json", "md5": "70b428bb6ac7af8ce7f88fe139bccd44", "content": "eyJ2ZXJzaW9uIjogIjEuMC4wIiwgImVuY29kaW5nIjogInV0Zi04IiwgInBvaV9pbmZvIjogW3sibmFtZSI6ICJwMSIsICJwb3NpdGlvbiI6IHsieCI6IC0yMS41NCwgInkiOiA5LjQ3LCAieWF3IjogMC4wMn19LCB7Im5hbWUiOiAicDIiLCAicG9zaXRpb24iOiB7IngiOiAtMjEuMzMsICJ5IjogNy43MywgInlhdyI6IDUuOTN9fSwgeyJuYW1lIjogInAzIiwgInBvc2l0aW9uIjogeyJ4IjogLTIxLjM4LCAieSI6IDYuNDgsICJ5YXciOiA2LjE2fX0sIHsibmFtZSI6ICJwNCIsICJwb3NpdGlvbiI6IHsieCI6IC0xNi4yMiwgInkiOiA1LjIsICJ5YXciOiAwLjA2fX0sIHsibmFtZSI6ICJwNSIsICJwb3NpdGlvbiI6IHsieCI6IC0xMi42MywgInkiOiA1LjE1LCAieWF3IjogNi4yN319LCB7Im5hbWUiOiAicDYiLCAicG9zaXRpb24iOiB7IngiOiAtOS4zMywgInkiOiA1LjIsICJ5YXciOiAwLjA1fX0sIHsibmFtZSI6ICJ3b3JrIiwgInBvc2l0aW9uIjogeyJ4IjogLTAuNTgsICJ5IjogNS4xNywgInlhdyI6IDAuMDl9fSwgeyJuYW1lIjogInA3IiwgInBvc2l0aW9uIjogeyJ4IjogLTYuMjksICJ5IjogNS4wNywgInlhdyI6IDYuMjd9fSwgeyJuYW1lIjogInA4IiwgInBvc2l0aW9uIjogeyJ4IjogLTMuMTgsICJ5IjogNS4wLCAieWF3IjogMC4yMn19LCB7Im5hbWUiOiAiY2FyNiIsICJwb3NpdGlvbiI6IHsieCI6IC0yMS4zMiwgInkiOiA4Ljg1LCAieWF3IjogNi4yMX19LCB7Im5hbWUiOiAiY2FyNCIsICJwb3NpdGlvbiI6IHsieCI6IC0xOC4yMywgInkiOiA1LjIzLCAieWF3IjogMy4xMX19LCB7Im5hbWUiOiAiaG9tZSIsICJwb3NpdGlvbiI6IHsieCI6IC05LjYxLCAieSI6IDEwLjQ2LCAieWF3IjogMC4wNX19LCB7Im5hbWUiOiAiY2FyNSIsICJwb3NpdGlvbiI6IHsieCI6IC0yMS4zOSwgInkiOiA3LjAyLCAieWF3IjogNi4xOX19LCB7Im5hbWUiOiAiY2FyMiIsICJwb3NpdGlvbiI6IHsieCI6IC0xMS40LCAieSI6IDUuMjksICJ5YXciOiAzLjI0fX0sIHsibmFtZSI6ICJjYXIzIiwgInBvc2l0aW9uIjogeyJ4IjogLTE0LjQ1LCAieSI6IDUuMTUsICJ5YXciOiAzLjAzfX0sIHsibmFtZSI6ICJjYXIxIiwgInBvc2l0aW9uIjogeyJ4IjogLTguMDYsICJ5IjogNS4yNSwgInlhdyI6IDMuMn19XSwgImNoYXJnZV9wb2ludHNfaW5mbyI6IFt7Im5hbWUiOiAiY2hhcmdlIiwgInBvc2l0aW9uIjogeyJ4IjogLTEyLjcyNTcsICJ5IjogOS4xMDYzLCAieWF3IjogMC4wMzc1NDUxfX1dLCAiZ3JvdXBzIjogeyIjdGVzdGluZyMiOiBbInAxIiwgInAyIiwgInAzIiwgInA0IiwgInA1IiwgInA2IiwgInA3IiwgInA4IiwgIndvcmsiLCAiaG9tZSIsICJjYXIxIiwgImNhcjIiLCAiY2FyMyIsICJjYXI0IiwgImNhcjUiLCAiY2FyNiJdfX0=","destination": "both","file_size": 1376,"version": 0 }
+  {"message_type": "update_file", "file_name": "poi.json", "md5": "0d8fc1ce3dfc368136344f5304be35f6", "content": "eyJ2ZXJzaW9uIjogIjEuMC4wIiwgImVuY29kaW5nIjogInV0Zi04IiwgInBvaV9pbmZvIjogW3sibmFtZSI6ICJwMSIsICJwb3NpdGlvbiI6IHsieCI6IDE4Ljk1LCAieSI6IC01LjM1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDIiLCAicG9zaXRpb24iOiB7IngiOiAxNi44NSwgInkiOiAtNS4zNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInAzIiwgInBvc2l0aW9uIjogeyJ4IjogMTQuOTUsICJ5IjogLTUuMTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwNCIsICJwb3NpdGlvbiI6IHsieCI6IDEyLjk1LCAieSI6IC01LjE1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDUiLCAicG9zaXRpb24iOiB7IngiOiAxMC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA2IiwgInBvc2l0aW9uIjogeyJ4IjogOC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA3IiwgInBvc2l0aW9uIjogeyJ4IjogNi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA4IiwgInBvc2l0aW9uIjogeyJ4IjogNC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA5IiwgInBvc2l0aW9uIjogeyJ4IjogMi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDEwIiwgInBvc2l0aW9uIjogeyJ4IjogLTAuMTUsICJ5IjogLTQuODUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTEiLCAicG9zaXRpb24iOiB7IngiOiAtMS41LCAieSI6IC0zLjA1LCAieWF3IjogMC4wfSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTIiLCAicG9zaXRpb24iOiB7IngiOiAwLjksICJ5IjogLTIuOTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTMiLCAicG9zaXRpb24iOiB7IngiOiAwLjcsICJ5IjogLTAuMDUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTQiLCAicG9zaXRpb24iOiB7IngiOiAtMS43NSwgInkiOiAtMC4wNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119XSwgImNoYXJnZV9wb2ludHNfaW5mbyI6IFt7Im5hbWUiOiAiY2hhcmdlIiwgInBvc2l0aW9uIjogeyJ4IjogLTEyLjc0NDYsICJ5IjogOS4yMTc0MywgInlhdyI6IDAuMDE3NTA4MX19XSwgImdyb3VwcyI6IHsiIzEzXzA3XzE1XzAwIyI6IFtdLCAiIzE1XzMxXzE3XzAwIyI6IFtdLCAiIzA4XzU0XzEyXzAzIyI6IFtdLCAiIzE3XzEwXzIwXzAwIyI6IFtdLCAiI3JlZCMiOiBbInAxIiwgInAyIiwgInAzIiwgInA0IiwgInA1IiwgInA2IiwgInA3IiwgInA4IiwgInA5IiwgInAxMCIsICJwMTEiLCAicDEyIiwgInAxMyIsICJwMTQiXX19","destination": "both","file_size": 1455,"version": 0 }
+# 点位信息
+poi_info:
+    [{"name": "p1", "position": {"x": 18.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p2", "position": {"x": 16.85, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p3", "position": {"x": 14.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p4", "position": {"x": 12.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p5", "position": {"x": 10.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p6", "position": {"x": 8.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p7", "position": {"x": 6.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p8", "position": {"x": 4.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p9", "position": {"x": 2.95, "y": -5.15, "yaw": 0.0}, "tags": []}, {"name": "p10", "position": {"x": -0.15, "y": -4.85, "yaw": 3.14}, "tags": []}, {"name": "p11", "position": {"x": -1.5, "y": -3.05, "yaw": 0.0}, "tags": []}, {"name": "p12", "position": {"x": 0.9, "y": -2.95, "yaw": 3.14}, "tags": []}, {"name": "p13", "position": {"x": 0.7, "y": -0.05, "yaw": 3.14}, "tags": []}, {"name": "p14", "position": {"x": -1.75, "y": -0.05, "yaw": 0.0}, "tags": []}, {"name": "charge", "position": {"x": 16.9005, "y": -9.16168, "yaw": 3.04992}}]
+
 apply_map: # 切换地图
   {"message_type": "apply_map","map_name": "HongQiao"}
 
@@ -41,6 +49,9 @@ move: # 移动一段距离
 # 取消导航
 cancel_goal:
   { "message_type": "cancel_goal", "robot_mac_address": *robot_mac,}
+# 继续上一次漫游
+continue_roaming:
+  {"message_type": "poi_action","robot_mac_address": *robot_mac,"mode": "continue_roaming"}
 charge: # 自动充电
   { "message_type": "charge", "robot_mac_address":  *robot_mac,}
 goCharge: # 导航到对位点并自动充电

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-#
 import json
+import yaml
 import struct
 import time, sys
 import configRead
@@ -15,7 +16,10 @@ if sys.getdefaultencoding() != 'utf-8':
 6  # Author:       kingming
 7  # Date:         2020/5/21
 8  #------------------------------------
-R = configRead.Read("")
+R = configRead.Read("") # 需要使用其中的方法解析base64
+f1 = open('conf/config.yaml')
+ymload = yaml.safe_load(f1)
+poi_info = ymload.get('poi_info')
 def receive2dic(tcp_sock):
     """ 以字节方式（bytes）接收数据，
     返回 “字典”（python 的 key-value 数据类型） """
@@ -38,6 +42,20 @@ def udecode(utext):
     # 去掉dict中Unicode编码符号
     return json.dumps(utext).decode('unicode-escape')
 
+# 将坐标转化为名称
+def poiNmae(poi):
+    global poi_info
+    # print poi_info
+    x, y, yaw = poi.get('x'), poi.get('y'), poi.get('yaw')
+    # print x, y, yaw
+    for v in poi_info:
+        if v.get('position').get('x') == x and v.get('position').get('y') == y and v.get('position').get('yaw') == yaw:
+            return v.get('name')
+            break
+        else:
+            continue
+    return udecode(poi)
+
 class RecvTread(Thread):
     def __init__(self, tcp_socket):
         Thread.__init__(self)
@@ -47,7 +65,7 @@ class RecvTread(Thread):
         while True:
             msg = receive2dic(self.s)
             if msg['message_type'] == 'register_status':
-                print getDate(), '客户端注册成功:{}'.format(udecode(msg))
+                print getDate(), '客户端注册成功:{}'.format((msg))
             elif msg['message_type'] == 'all_robot_info':
                 print getDate(), '获取服务器上所有机器人:{}'.format(udecode(msg))
             elif msg['message_type'] == 'report_charge_status':
@@ -78,7 +96,7 @@ class RecvTread(Thread):
                 else:
                     print getDate(), '硬件错误:{}'.format(udecode(msg))
             elif msg['message_type'] == 'real_path':
-                print getDate(), '全局规划路径:{}'.format(udecode(msg))
+                print getDate(), '全局规划路径 ——————————————————>:{}'.format( poiNmae(msg['real_path_info'][-1]) )
             elif msg['message_type'] == 'report_poi_status':
                 print getDate(), 'POI状态反馈:{}'.format(udecode(msg))
             elif msg['message_type'] == 'report_loc_status':
@@ -95,3 +113,8 @@ class RecvTread(Thread):
                 print getDate(), '点位信息:{}'.format(R.getBase64(msg['content']))
             else:
                 print getDate(), udecode(msg)
+
+
+# if __name__ == '__main__':
+#     p = {"y": -5.15, "x": 16.85, "yaw": 3.14}
+#     print poiNmae(p)
