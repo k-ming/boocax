@@ -3,9 +3,11 @@ import json
 import yaml
 import struct
 import time, sys
-import configRead
+from configRead import Read
 from threading import Thread
 from comn.getDate import getDate
+from comn.setYaml import setDictYaml
+
 if sys.getdefaultencoding() != 'utf-8':
     reload(sys)
     sys.setdefaultencoding('utf-8')
@@ -16,7 +18,7 @@ if sys.getdefaultencoding() != 'utf-8':
 6  # Author:       kingming
 7  # Date:         2020/5/21
 8  #------------------------------------
-R = configRead.Read("") # 需要使用其中的方法解析base64
+R = Read("") # 需要使用其中的方法解析base64
 f1 = open('conf/config.yaml')
 ymload = yaml.safe_load(f1)
 poi_info = ymload.get('poi_info')
@@ -38,6 +40,7 @@ def receive2dic(tcp_sock):
         # 拼接字符串与编码转换
     str_json = (b''.join(buffer)).decode()
     return json.loads(str_json)
+    
 def udecode(utext):
     # 去掉dict中Unicode编码符号
     return json.dumps(utext).decode('unicode-escape')
@@ -75,7 +78,9 @@ class RecvTread(Thread):
             elif msg['message_type'] == 'sonar':
                 print getDate(), '超声:{}'.format(udecode(msg))
             elif msg['message_type'] == 'report_pos_vel_status':
-                print getDate(), '机器人位置与速度状态更新:{}'.format(udecode(msg))
+                print getDate(), '机器人位置与速度状态更新:{}'.format(udecode(msg['pose']))
+                print '转化后的坐标：{},{}'.format(1338/2 + msg['pose']['x']*20, 898-(msg['pose']['y']*20 + 898/2))
+                # print '转化后的坐标：{},{}'.format(-1338/2 + msg['pose']['x']*20, 898/2-msg['pose']['y']*20)
             elif msg['message_type'] == 'auto_guided_task_status':
                 print getDate(), '状态反馈(上传到Server):{}'.format(udecode(msg))
             elif msg['message_type'] == 'report_pos_vel_status':
@@ -110,7 +115,15 @@ class RecvTread(Thread):
             elif msg['message_type'] == 'local_path':
                 print getDate(), '（导航中）局部路径:{}'.format(udecode(msg))
             elif msg['message_type'] == 'update_file':
-                print getDate(), '点位信息:{}'.format(R.getBase64(msg['content']))
+                if msg['file_name'] == 'poi.json':
+                    print getDate(), '更新点位信息:{}'.format( udecode(json.loads(R.getBase64(udecode( msg['content'])))['poi_info']  ))
+                    setDictYaml('conf/config.yaml', 'poi_info', json.loads(R.getBase64(udecode( msg['content'])))['poi_info'])
+                elif msg['file_name'] == 'map.png':
+                    print getDate(), '地图图片:{}'.format(udecode(msg['content'])) 
+                else :
+                    print getDate(), '文件信息:{}'.format(udecode(msg)) 
+            elif msg['message_type'] == 'all_map_info':
+                print getDate(), '所有地图信息:{}'.format(udecode(msg))
             else:
                 print getDate(), udecode(msg)
 

@@ -1,63 +1,100 @@
----
 # 连接初始化信息
-robot_mac:
-  &robot_mac AE:F0:52:DF:EC:1B
-host_mac:
-  &host_mac A0:A4:C5:2E:EF:37
-server_ip:
-  &server_ip 192.168.3.23
-reg_client_message:
-  {"message_type": "register_client","client_type": 3,"mac_address": *host_mac }
+robot_mac: &robot_mac AE:F0:52:DF:EC:1B
+host_mac: &host_mac A0:A4:C5:2E:EF:37
+server_ip: &server_ip 192.168.137.32
+reg_client_message: {message_type: register_client, client_type: 3, mac_address: *host_mac}
 
 # 订阅状态信息
-get_all_robot_info: # 获取所有机器人信息
-  {"message_type": "get_all_robot_info"}
-set_sensor_data_info: # 设置传感器实时参数
-  {"message_type": "set_sensor_data_info","client_type": 3,"mac_address": *host_mac}
-get_all_robot_info_message: # 获取服务器上所有机器人信息
-  {"message_type": "get_all_robot_info","client_type": 3,"mac_address": *host_mac}
-report_loc_status: # 定位状态
-  {"message_type": 'report_loc_status',"client_type": 3,"mac_address": *host_mac}
-move_status: # 移动状态 v2
-  {"message_type": 'report_move_status_v2',"client_type": 3,"mac_address": *host_mac}
-move_status1: # 移动状态 v1
-  {"message_type": 'report_move_status',"client_type": 3,"mac_address": *host_mac}
-report_button_status: # 按键状态
-  {"message_type": 'report_button_status',"client_type": 3,"mac_address": *host_mac}
-report_charge_status: # 充电状态
-  { "mac_address": *host_mac, "ip_address": "192.168.10.3", "name": "robot1", "id": 1, "message_type": "report_charge_status", "charge_status": 0 }
-report_poi_status: # 上报位置信息
-  {"message_type": 'report_poi_status',"client_type": 3,"mac_address": *host_mac}
-get_file: # 获取点位信息
-  {"message_type": "get_file","file_name": "poi.json"}
-get_all_map_info: # 获取地图信息
-  {"message_type": "get_all_map_info"}
-update_file: # 更新点位信息
-  {"message_type": "update_file", "file_name": "poi.json", "md5": "0d8fc1ce3dfc368136344f5304be35f6", "content": "eyJ2ZXJzaW9uIjogIjEuMC4wIiwgImVuY29kaW5nIjogInV0Zi04IiwgInBvaV9pbmZvIjogW3sibmFtZSI6ICJwMSIsICJwb3NpdGlvbiI6IHsieCI6IDE4Ljk1LCAieSI6IC01LjM1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDIiLCAicG9zaXRpb24iOiB7IngiOiAxNi44NSwgInkiOiAtNS4zNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInAzIiwgInBvc2l0aW9uIjogeyJ4IjogMTQuOTUsICJ5IjogLTUuMTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwNCIsICJwb3NpdGlvbiI6IHsieCI6IDEyLjk1LCAieSI6IC01LjE1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDUiLCAicG9zaXRpb24iOiB7IngiOiAxMC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA2IiwgInBvc2l0aW9uIjogeyJ4IjogOC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA3IiwgInBvc2l0aW9uIjogeyJ4IjogNi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA4IiwgInBvc2l0aW9uIjogeyJ4IjogNC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA5IiwgInBvc2l0aW9uIjogeyJ4IjogMi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDEwIiwgInBvc2l0aW9uIjogeyJ4IjogLTAuMTUsICJ5IjogLTQuODUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTEiLCAicG9zaXRpb24iOiB7IngiOiAtMS41LCAieSI6IC0zLjA1LCAieWF3IjogMC4wfSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTIiLCAicG9zaXRpb24iOiB7IngiOiAwLjksICJ5IjogLTIuOTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTMiLCAicG9zaXRpb24iOiB7IngiOiAwLjcsICJ5IjogLTAuMDUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTQiLCAicG9zaXRpb24iOiB7IngiOiAtMS43NSwgInkiOiAtMC4wNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119XSwgImNoYXJnZV9wb2ludHNfaW5mbyI6IFt7Im5hbWUiOiAiY2hhcmdlIiwgInBvc2l0aW9uIjogeyJ4IjogLTEyLjc0NDYsICJ5IjogOS4yMTc0MywgInlhdyI6IDAuMDE3NTA4MX19XSwgImdyb3VwcyI6IHsiIzEzXzA3XzE1XzAwIyI6IFtdLCAiIzE1XzMxXzE3XzAwIyI6IFtdLCAiIzA4XzU0XzEyXzAzIyI6IFtdLCAiIzE3XzEwXzIwXzAwIyI6IFtdLCAiI3JlZCMiOiBbInAxIiwgInAyIiwgInAzIiwgInA0IiwgInA1IiwgInA2IiwgInA3IiwgInA4IiwgInA5IiwgInAxMCIsICJwMTEiLCAicDEyIiwgInAxMyIsICJwMTQiXX19","destination": "both","file_size": 1455,"version": 0 }
+# 获取所有机器人信息
+get_all_robot_info: {message_type: get_all_robot_info}
+# 设置传感器实时参数
+set_sensor_data_info: {message_type: set_sensor_data_info, client_type: 3, mac_address: *host_mac}
+# 获取服务器上所有机器人信息
+get_all_robot_info_message: {message_type: get_all_robot_info, client_type: 3, mac_address: *host_mac}
+# 定位状态
+report_loc_status: {message_type: report_loc_status, client_type: 3, mac_address: *host_mac}
+# 移动状态 v2
+move_status: {message_type: report_move_status_v2, client_type: 3, mac_address: *host_mac}
+# 移动状态 v1
+move_status1: {message_type: report_move_status, client_type: 3, mac_address: *host_mac}
+# 按键状态
+report_button_status: {message_type: report_button_status, client_type: 3, mac_address: *host_mac}
+# 充电状态
+report_charge_status: {mac_address: *host_mac, ip_address: 192.168.10.3, name: robot1,
+  id: 1, message_type: report_charge_status, charge_status: 0}
+# 上报位置信息
+report_poi_status: {message_type: report_poi_status, client_type: 3, mac_address: *host_mac}
+# 获取地图信息
+get_all_map_info: {message_type: get_all_map_info}
+# 更新点位
+update_file: {message_type: update_file, file_name: poi.json, md5: 0d8fc1ce3dfc368136344f5304be35f6,
+  content: eyJ2ZXJzaW9uIjogIjEuMC4wIiwgImVuY29kaW5nIjogInV0Zi04IiwgInBvaV9pbmZvIjogW3sibmFtZSI6ICJwMSIsICJwb3NpdGlvbiI6IHsieCI6IDE4Ljk1LCAieSI6IC01LjM1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDIiLCAicG9zaXRpb24iOiB7IngiOiAxNi44NSwgInkiOiAtNS4zNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInAzIiwgInBvc2l0aW9uIjogeyJ4IjogMTQuOTUsICJ5IjogLTUuMTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwNCIsICJwb3NpdGlvbiI6IHsieCI6IDEyLjk1LCAieSI6IC01LjE1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDUiLCAicG9zaXRpb24iOiB7IngiOiAxMC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA2IiwgInBvc2l0aW9uIjogeyJ4IjogOC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA3IiwgInBvc2l0aW9uIjogeyJ4IjogNi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA4IiwgInBvc2l0aW9uIjogeyJ4IjogNC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA5IiwgInBvc2l0aW9uIjogeyJ4IjogMi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDEwIiwgInBvc2l0aW9uIjogeyJ4IjogLTAuMTUsICJ5IjogLTQuODUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTEiLCAicG9zaXRpb24iOiB7IngiOiAtMS41LCAieSI6IC0zLjA1LCAieWF3IjogMC4wfSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTIiLCAicG9zaXRpb24iOiB7IngiOiAwLjksICJ5IjogLTIuOTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTMiLCAicG9zaXRpb24iOiB7IngiOiAwLjcsICJ5IjogLTAuMDUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTQiLCAicG9zaXRpb24iOiB7IngiOiAtMS43NSwgInkiOiAtMC4wNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119XSwgImNoYXJnZV9wb2ludHNfaW5mbyI6IFt7Im5hbWUiOiAiY2hhcmdlIiwgInBvc2l0aW9uIjogeyJ4IjogLTEyLjc0NDYsICJ5IjogOS4yMTc0MywgInlhdyI6IDAuMDE3NTA4MX19XSwgImdyb3VwcyI6IHsiIzEzXzA3XzE1XzAwIyI6IFtdLCAiIzE1XzMxXzE3XzAwIyI6IFtdLCAiIzA4XzU0XzEyXzAzIyI6IFtdLCAiIzE3XzEwXzIwXzAwIyI6IFtdLCAiI3JlZCMiOiBbInAxIiwgInAyIiwgInAzIiwgInA0IiwgInA1IiwgInA2IiwgInA3IiwgInA4IiwgInA5IiwgInAxMCIsICJwMTEiLCAicDEyIiwgInAxMyIsICJwMTQiXX19,
+  destination: both, file_size: 1455, version: 0}
 # 点位信息
 poi_info:
-    [{"name": "p1", "position": {"x": 18.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p2", "position": {"x": 16.85, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p3", "position": {"x": 14.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p4", "position": {"x": 12.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p5", "position": {"x": 10.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p6", "position": {"x": 8.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p7", "position": {"x": 6.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p8", "position": {"x": 4.95, "y": -5.15, "yaw": 3.14}, "tags": []}, {"name": "p9", "position": {"x": 2.95, "y": -5.15, "yaw": 0.0}, "tags": []}, {"name": "p10", "position": {"x": -0.15, "y": -4.85, "yaw": 3.14}, "tags": []}, {"name": "p11", "position": {"x": -1.5, "y": -3.05, "yaw": 0.0}, "tags": []}, {"name": "p12", "position": {"x": 0.9, "y": -2.95, "yaw": 3.14}, "tags": []}, {"name": "p13", "position": {"x": 0.7, "y": -0.05, "yaw": 3.14}, "tags": []}, {"name": "p14", "position": {"x": -1.75, "y": -0.05, "yaw": 0.0}, "tags": []}, {"name": "charge", "position": {"x": 16.9005, "y": -9.16168, "yaw": 3.04992}}]
-
-apply_map: # 切换地图
-  {"message_type": "apply_map","map_name": "HongQiao"}
+- position:
+    y: 3.46296
+    x: -9.85168
+    yaw: 0.283873
+  name: home
+  tags: []
+- position:
+    y: 3.36778
+    x: -4.81611
+    yaw: 4.91776
+  name: work
+  tags: []
+- position:
+    y: 3.30353
+    x: -0.00784208
+    yaw: 5.18885
+  name: p1
+  tags: []
+- position:
+    y: -3.08653
+    x: 0.145078
+    yaw: 4.71718
+  name: p2
+  tags: []
+- position:
+    y: -4.00539
+    x: -2.46292
+    yaw: 1.57441
+  name: p3
+  tags: []
+- position:
+    y: -1.3907
+    x: -5.11731
+    yaw: 1.67683
+  name: p4
+  tags: []
+- position:
+    y: -1.6798
+    x: -8.02858
+    yaw: 3.87526
+  name: p5
+  tags: []
+apply_map: {message_type: apply_map, map_name: HongQiao}
+# 获取地图文件
+get_map: {message_type: get_file, file_name: map.png}
+# 获取点位信息
+get_poi: {message_type: get_file, file_name: poi.json}
 
 # 控制机器人
-poi_action1: # 导航到常用位置（poi_action/goto）
-  { "message_type": "poi_action", "robot_mac_address": *robot_mac, "mode": "goto", "params": { "name": "p1" } }
-move: # 移动一段距离
-  { "message_type": "move", "robot_mac_address": *robot_mac, "vx": 0.5, "vy": 0, "vtheta": 0, }
+# 导航到常用位置（poi_action/goto）
+poi_action1: {message_type: poi_action, robot_mac_address: *robot_mac, mode: goto,
+  params: {name: p1}}
+move: {message_type: move, robot_mac_address: *robot_mac, vx: 0.5, vy: 0, vtheta: 0} # 移动一段距离
 # 取消导航
-cancel_goal:
-  { "message_type": "cancel_goal", "robot_mac_address": *robot_mac,}
+cancel_goal: {message_type: cancel_goal, robot_mac_address: *robot_mac}
 # 继续上一次漫游
-continue_roaming:
-  {"message_type": "poi_action","robot_mac_address": *robot_mac,"mode": "continue_roaming"}
-charge: # 自动充电
-  { "message_type": "charge", "robot_mac_address":  *robot_mac,}
-goCharge: # 导航到对位点并自动充电
-  { "message_type": "charge", "robot_mac_address": *robot_mac, "charge_point_name": "charge" }
-cancel_charge: # 取消充电
-  { "message_type": "cancel_charge", "robot_mac_address": *robot_mac, }
-power_off: # 关机
-  { "message_type": "shutdown", "robot_mac_address": *robot_mac,"poweroff_delay": 30, "auto_poweron_delay": 60, "auto_poweron_time": "9:30:00" }
-...
+continue_roaming: {message_type: poi_action, robot_mac_address: *robot_mac, mode: continue_roaming}
+# 自动充电
+charge: {message_type: charge, robot_mac_address: *robot_mac}
+# 导航到对位点并自动充电
+goCharge: {message_type: charge, robot_mac_address: *robot_mac, charge_point_name: charge}
+# 取消充电
+cancel_charge: {message_type: cancel_charge, robot_mac_address: *robot_mac}
+# 关机
+power_off: {message_type: shutdown, robot_mac_address: *robot_mac, poweroff_delay: 30,
+  auto_poweron_delay: 60, auto_poweron_time: 9:30:00}
