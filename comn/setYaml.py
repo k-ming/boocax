@@ -12,10 +12,10 @@ def readYaml(fileDir):
         try:
             obj = yaml.safe_load(ya)
         except Exception as e:
-            print e
-        print obj['password'][1]
+            print (e)
+        print (obj['password'][1])
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    setDictYaml('../conf/test.yaml', 'password', [1,2,3])
-    readYaml('../conf/test.yaml')
+#     setDictYaml('../conf/test.yaml', 'password', [1,2,3])
+#     readYaml('../conf/test.yaml')

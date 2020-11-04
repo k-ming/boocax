@@ -25,12 +25,12 @@ class Read():
             rec = re.search('"robot_mac_address":(.*?),', self.cfg.get(c1, c2).encode('utf-8')).group(1)
             return eval(re.sub(rec, self.getInfo('info', 'robot_mac'), self.cfg.get(c1, c2).encode('utf-8')))
         else:
-            print '没有匹配到结果...'
+            print ('没有匹配到结果...' )
     def setInfo(self, c1, c2):
         if c1 not in self.cfg.sections():
-            print 'not found options'
+            print ('not found options') 
         else:
-            print self.getInfo(c1, c2)
+            print (self.getInfo(c1, c2) )
             self.cfg.set('status', 'update_file','test')
 
 
@@ -59,4 +59,4 @@ if __name__ == '__main__':
     # b1 = "eyJ2ZXJzaW9uIjogIjEuMC4wIiwgImVuY29kaW5nIjogInV0Zi04IiwgInBvaV9pbmZvIjogW3sibmFtZSI6ICJwMSIsICJwb3NpdGlvbiI6IHsieCI6IDE4Ljk1LCAieSI6IC01LjM1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDIiLCAicG9zaXRpb24iOiB7IngiOiAxNi44NSwgInkiOiAtNS4zNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInAzIiwgInBvc2l0aW9uIjogeyJ4IjogMTQuOTUsICJ5IjogLTUuMTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwNCIsICJwb3NpdGlvbiI6IHsieCI6IDEyLjk1LCAieSI6IC01LjE1LCAieWF3IjogMy4xNH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDUiLCAicG9zaXRpb24iOiB7IngiOiAxMC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA2IiwgInBvc2l0aW9uIjogeyJ4IjogOC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA3IiwgInBvc2l0aW9uIjogeyJ4IjogNi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA4IiwgInBvc2l0aW9uIjogeyJ4IjogNC45NSwgInkiOiAtNS4xNSwgInlhdyI6IDMuMTR9LCAidGFncyI6IFtdfSwgeyJuYW1lIjogInA5IiwgInBvc2l0aW9uIjogeyJ4IjogMi45NSwgInkiOiAtNS4xNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119LCB7Im5hbWUiOiAicDEwIiwgInBvc2l0aW9uIjogeyJ4IjogLTAuMTUsICJ5IjogLTQuODUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTEiLCAicG9zaXRpb24iOiB7IngiOiAtMS41LCAieSI6IC0zLjA1LCAieWF3IjogMC4wfSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTIiLCAicG9zaXRpb24iOiB7IngiOiAwLjksICJ5IjogLTIuOTUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTMiLCAicG9zaXRpb24iOiB7IngiOiAwLjcsICJ5IjogLTAuMDUsICJ5YXciOiAzLjE0fSwgInRhZ3MiOiBbXX0sIHsibmFtZSI6ICJwMTQiLCAicG9zaXRpb24iOiB7IngiOiAtMS43NSwgInkiOiAtMC4wNSwgInlhdyI6IDAuMH0sICJ0YWdzIjogW119XSwgImNoYXJnZV9wb2ludHNfaW5mbyI6IFt7Im5hbWUiOiAiY2hhcmdlIiwgInBvc2l0aW9uIjogeyJ4IjogLTEyLjc0NDYsICJ5IjogOS4yMTc0MywgInlhdyI6IDAuMDE3NTA4MX19XSwgImdyb3VwcyI6IHsiIzEzXzA3XzE1XzAwIyI6IFtdLCAiIzE1XzMxXzE3XzAwIyI6IFtdLCAiIzA4XzU0XzEyXzAzIyI6IFtdLCAiIzE3XzEwXzIwXzAwIyI6IFtdLCAiI3JlZCMiOiBbInAxIiwgInAyIiwgInAzIiwgInA0IiwgInA1IiwgInA2IiwgInA3IiwgInA4IiwgInA5IiwgInAxMCIsICJwMTEiLCAicDEyIiwgInAxMyIsICJwMTQiXX19"
     # print R.getBase64(b1)
     
-    print R.setMd5('[]')
+    print (R.setMd5('[]'))

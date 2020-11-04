@@ -1,5 +1,5 @@
 # 连接初始化信息
-robot_mac: &robot_mac AE:F0:52:DF:EC:1B
+robot_mac: &robot_mac 52:BE:88:D0:96:B0
 host_mac: &host_mac A0:A4:C5:2E:EF:37
 server_ip: &server_ip 192.168.137.32
 reg_client_message: {message_type: register_client, client_type: 3, mac_address: *host_mac}
@@ -32,47 +32,47 @@ update_file: {message_type: update_file, file_name: poi.json, md5: 0d8fc1ce3dfc3
   destination: both, file_size: 1455, version: 0}
 # 点位信息
 poi_info:
-- position:
-    y: 3.46296
+- name: home
+  position:
     x: -9.85168
+    y: 3.46296
     yaw: 0.283873
-  name: home
   tags: []
-- position:
-    y: 3.36778
+- name: work
+  position:
     x: -4.81611
+    y: 3.36778
     yaw: 4.91776
-  name: work
   tags: []
-- position:
-    y: 3.30353
+- name: p1
+  position:
     x: -0.00784208
+    y: 3.30353
     yaw: 5.18885
-  name: p1
   tags: []
-- position:
-    y: -3.08653
+- name: p2
+  position:
     x: 0.145078
+    y: -3.08653
     yaw: 4.71718
-  name: p2
   tags: []
-- position:
-    y: -4.00539
+- name: p3
+  position:
     x: -2.46292
+    y: -4.00539
     yaw: 1.57441
-  name: p3
   tags: []
-- position:
-    y: -1.3907
+- name: p4
+  position:
     x: -5.11731
+    y: -1.3907
     yaw: 1.67683
-  name: p4
   tags: []
-- position:
-    y: -1.6798
+- name: p5
+  position:
     x: -8.02858
+    y: -1.6798
     yaw: 3.87526
-  name: p5
   tags: []
 apply_map: {message_type: apply_map, map_name: HongQiao}
 # 获取地图文件
@@ -97,4 +97,4 @@ goCharge: {message_type: charge, robot_mac_address: *robot_mac, charge_point_nam
 cancel_charge: {message_type: cancel_charge, robot_mac_address: *robot_mac}
 # 关机
 power_off: {message_type: shutdown, robot_mac_address: *robot_mac, poweroff_delay: 30,
-  auto_poweron_delay: 60, auto_poweron_time: 9:30:00}
+  auto_poweron_delay: 300, auto_poweron_time: 9:30:00}

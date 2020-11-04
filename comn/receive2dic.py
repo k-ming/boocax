@@ -3,10 +3,11 @@ import json
 import yaml
 import struct
 import time, sys
-from configRead import Read
+from comn.configRead import Read
 from threading import Thread
 from comn.getDate import getDate
 from comn.setYaml import setDictYaml
+from comn.writeLog import writeLog
 
 if sys.getdefaultencoding() != 'utf-8':
     reload(sys)
@@ -43,7 +44,7 @@ def receive2dic(tcp_sock):
     
 def udecode(utext):
     # 去掉dict中Unicode编码符号
-    return json.dumps(utext).decode('unicode-escape')
+    return json.dumps(utext).encode('utf-8').decode('unicode-escape')
 
 # 将坐标转化为名称
 def poiNmae(poi):
@@ -68,64 +69,64 @@ class RecvTread(Thread):
         while True:
             msg = receive2dic(self.s)
             if msg['message_type'] == 'register_status':
-                print getDate(), '客户端注册成功:{}'.format((msg))
+                print(getDate(), '客户端注册成功:{}'.format((udecode(msg))))
             elif msg['message_type'] == 'all_robot_info':
-                print getDate(), '获取服务器上所有机器人:{}'.format(udecode(msg))
+                print(getDate(), '获取服务器上所有机器人:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_charge_status':
-                print getDate(), '充电状态:{}'.format(udecode(msg))
+                print(getDate(), '充电状态:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_move_status_v2' or msg['message_type'] == 'report_move_status':
-                print getDate(), '移动状态:{}'.format(udecode(msg))
+                print(getDate(), '移动状态:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'sonar':
-                print getDate(), '超声:{}'.format(udecode(msg))
+                print(getDate(), '超声:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_pos_vel_status':
-                print getDate(), '机器人位置与速度状态更新:{}'.format(udecode(msg['pose']))
-                print '转化后的坐标：{},{}'.format(1338/2 + msg['pose']['x']*20, 898-(msg['pose']['y']*20 + 898/2))
+                print(getDate(), '机器人位置与速度状态更新:{}'.format(udecode(msg['pose'])))
+                print('转化后的坐标：{},{}'.format(1338/2 + msg['pose']['x']*20, 898-(msg['pose']['y']*20 + 898/2)))
                 # print '转化后的坐标：{},{}'.format(-1338/2 + msg['pose']['x']*20, 898/2-msg['pose']['y']*20)
             elif msg['message_type'] == 'auto_guided_task_status':
-                print getDate(), '状态反馈(上传到Server):{}'.format(udecode(msg))
+                print(getDate(), '状态反馈(上传到Server):{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_pos_vel_status':
-                print getDate(), '位置速度信息:{}'.format(udecode(msg))
+                print(getDate(), '位置速度信息:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_sensor_data_info':
-                print getDate(), '超声传感器:{}'.format(udecode(msg))
+                print(getDate(), '超声传感器:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_basic_status':
-                print getDate(), '基本信息:{}'.format(udecode(msg))
+                print(getDate(), '基本信息:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'device_status':
-                print getDate(), '设备状态:{}'.format(udecode(msg))
+                print(getDate(), '设备状态:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'laser':
-                print getDate(), '激光雷达数据（laser）:{}'.format(udecode(msg))
+                print(getDate(), '激光雷达数据（laser）:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_button_status':
-                print getDate(), '急停状态:{}'.format(udecode(msg))
+                print(getDate(), '急停状态:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_fault_code':
                 if msg['code'] == 1:
-                    print getDate(), '充电失败:{}'.format(udecode(msg))
+                    print(getDate(), '充电失败:{}'.format(udecode(msg)))
                 else:
-                    print getDate(), '硬件错误:{}'.format(udecode(msg))
+                    print(getDate(), '硬件错误:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'real_path':
-                print getDate(), '全局规划路径 ——————————————————>:{}'.format( poiNmae(msg['real_path_info'][-1]) )
+                print(getDate(), '全局规划路径 ——————————————————>:{}'.format( poiNmae(msg['real_path_info'][-1]) ))
             elif msg['message_type'] == 'report_poi_status':
-                print getDate(), 'POI状态反馈:{}'.format(udecode(msg))
+                print(getDate(), 'POI状态反馈:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_loc_status':
-                print getDate(), '机器人定位状态更新:{}'.format(udecode(msg))
+                print(getDate(), '机器人定位状态更新:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'device_task_request':
-                print getDate(), '当前任务类型:{}'.format(udecode(msg))
+                print(getDate(), '当前任务类型:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'sensor_power_status':
-                print getDate(), '传感器上电状态:{}'.format(udecode(msg))
+                print(getDate(), '传感器上电状态:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'report_obd_status':
-                print getDate(), 'obd信息:{}'.format(udecode(msg))
+                print(getDate(), 'obd信息:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'local_path':
-                print getDate(), '（导航中）局部路径:{}'.format(udecode(msg))
+                print(getDate(), '（导航中）局部路径:{}'.format(udecode(msg)))
             elif msg['message_type'] == 'update_file':
                 if msg['file_name'] == 'poi.json':
-                    print getDate(), '更新点位信息:{}'.format( udecode(json.loads(R.getBase64(udecode( msg['content'])))['poi_info']  ))
+                    print(getDate(), '更新点位信息:{}'.format( udecode(json.loads(R.getBase64(udecode( msg['content'])))['poi_info']  )) )
                     setDictYaml('conf/config.yaml', 'poi_info', json.loads(R.getBase64(udecode( msg['content'])))['poi_info'])
                 elif msg['file_name'] == 'map.png':
-                    print getDate(), '地图图片:{}'.format(udecode(msg['content'])) 
+                    print(getDate(), '地图图片:{}'.format(udecode(msg['content'])) )
                 else :
-                    print getDate(), '文件信息:{}'.format(udecode(msg)) 
+                    print(getDate(), '文件信息:{}'.format(udecode(msg)) )
             elif msg['message_type'] == 'all_map_info':
-                print getDate(), '所有地图信息:{}'.format(udecode(msg))
+                print(getDate(), '所有地图信息:{}'.format(udecode(msg)) )
             else:
-                print getDate(), udecode(msg)
+                print(getDate(), udecode(msg) )
 
 
 # if __name__ == '__main__':
