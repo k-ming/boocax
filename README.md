@@ -1,2 +1,2 @@
 # boocax
-布科思底盘测试脚本
+boocax foot test script
