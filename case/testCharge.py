@@ -26,11 +26,11 @@ def testCharge(s):
     i = 1
     fail = 0
     while i <= 20:
-        print( getDate(), '*****************开始第%d轮导航****************************' % {i} )
-        writeLog('*****************开始第%d轮导航****************************' % {i})
-        print( getDate(),  '>>>导航到p2...' )
+        print( getDate(), '*****************开始第%d轮导航****************************' %i )
+        writeLog('*****************开始第%d轮导航****************************' % i)
+        print( getDate(),  '>>>导航到6F-1...' )
         writeLog('>>>导航到p2...')
-        json_packed = pack2bytes(yobj.get('poi_action2'))  # 导航点指定点
+        json_packed = pack2bytes(yobj.get('poi_action1'))  # 导航点指定点
         s.send(json_packed)
         while True:
             msg = receive2dic(s)

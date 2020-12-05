@@ -50,5 +50,8 @@ if __name__ == '__main__':
     # s.send(json_packed)
     # json_packed = pack2bytes(yobj.get('get_map') ) # 获取地图图片
     # s.send(json_packed)
+    # print(yobj.get('order_roaming'))
+    # json_packed = pack2bytes(yobj.get('order_roaming')) # 有序迅游
+    # s.send(json_packed)
 
     # testCharge(s)

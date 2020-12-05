@@ -119,6 +119,8 @@ class RecvTread(Thread):
                 if msg['file_name'] == 'poi.json':
                     print(getDate(), '更新点位信息:{}'.format( udecode(json.loads(R.getBase64(udecode( msg['content'])))['poi_info']  )) )
                     setDictYaml('conf/config.yaml', 'poi_info', json.loads(R.getBase64(udecode( msg['content'])))['poi_info'])
+                    print(getDate(), '更新充电点坐标:{}'.format( udecode(json.loads(R.getBase64(udecode( msg['content'])))['charge_points_info'][0]['name'] )))
+                    setDictYaml('conf/config.yaml', 'charge_point', '&charge_point '+ udecode(json.loads(R.getBase64(udecode( msg['content'])))['charge_points_info'][0]['name'] ) )
                 elif msg['file_name'] == 'map.png':
                     print(getDate(), '地图图片:{}'.format(udecode(msg['content'])) )
                 else :
