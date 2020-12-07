@@ -36,7 +36,7 @@ def subscribe():
     s.send(json_packed)
     json_packed = pack2bytes(set_filter)  # 过滤消息
     s.send(json_packed)
-    RecvTread(s).start()
+    # RecvTread(s).start()
     return s
 
 
@@ -54,4 +54,4 @@ if __name__ == '__main__':
     # json_packed = pack2bytes(yobj.get('order_roaming')) # 有序迅游
     # s.send(json_packed)
 
-    # testCharge(s)
+    testCharge(s)
