@@ -21,11 +21,11 @@ def testCharge(s):
         try:
             yobj = yaml.safe_load(yfile)
         except yaml.YAMLError as error:
-            print (error)
+            print(error)
     s = s
     i = 1
     fail = 0
-    while i <= 20:
+    while i <= 800:
         print( getDate(), '*****************开始第%d轮导航****************************' %i )
         writeLog('*****************开始第%d轮导航****************************' % i)
         print( getDate(),  '>>>导航到p2...' )
@@ -39,6 +39,14 @@ def testCharge(s):
                 if msg['move_status'] == 300:
                     print(getDate(), '到达目的地,状态:{}'.format(msg['move_status']))
                     writeLog('到达目的地p2:{}'.format(msg['move_status']))
+                    break
+                elif msg['move_status'] == 301 or msg['move_status'] ==311 msg['move_status'] == 312 msg['move_status'] == 313 msg['move_status'] == 314 msg['move_status'] == 315 msg['move_status'] == 316 msg['move_status'] == 317:
+                    print(getDate(), '任务执行失败,状态:{}'.format(msg['move_status']))
+                    writeLog('任务执行失败,状态:{}'.format(msg['move_status']))
+                    print(getDate(), '取消导航...')
+                    writeLog(getDate(), '取消导航...')
+                    json_packed = pack2bytes(yobj.get('cancel_goal'))
+                    s.send(json_packed)
                     break
             elif msg['message_type'] == 'report_button_status':
                 if msg['emergency_button'] == 2:
@@ -117,6 +125,15 @@ def testCharge(s):
                     print(getDate(), '到达对位点:{}'.format(msg['move_status']))
                     writeLog('到达对位点:{}'.format(msg['move_status']))
                     continue
+                elif msg['move_status'] == 301 or msg['move_status'] ==311 msg['move_status'] == 312 msg['move_status'] == 313 msg['move_status'] == 314 msg['move_status'] == 315 msg['move_status'] == 316 msg['move_status'] == 317:
+                    print(getDate(), '任务执行失败,状态:{}'.format(msg['move_status']))
+                    writeLog('任务执行失败,状态:{}'.format(msg['move_status']))
+                    print(getDate(), '取消导航...')
+                    writeLog(getDate(), '取消导航...')
+                    json_packed = pack2bytes(yobj.get('cancel_goal'))
+                    s.send(json_packed)
+                    fail += 1
+                    break
             else:
                 print(getDate(), '导航到对位点...')
                 writeLog('导航到对位点...')
